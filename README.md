@@ -1,5 +1,5 @@
 
-# Sistema-Automatizado-De-Votaciones (SADVO) 🗳️
+# (SADVO) 🗳️
 
 [![.NET](https://img.shields.io/badge/.NET-8.0|9.0-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 [![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-MVC-512BD4?style=flat-square)](https://docs.microsoft.com/aspnet/core)
