@@ -39,17 +39,15 @@ SADVO/
 ├── SADVO.Core.Domain/             # Capa de Dominio
 ├── Sadvo.Core.Application/        # Interfaces y DTOs
 ├── Sadvo.Infrastructure.Persistence/  # Entity Framework, Repositorios
-├── Sadvo.WebApp/                  # Capa de Presentación
-└── Tests/                         # Pruebas unitarias
+└── Sadvo.WebApp/                  # Capa de Presentación
 ```
 
 ## 🛠️ Tecnologías Utilizadas
 
 ### Backend
-- **Framework**: ASP.NET Core MVC (.NET 8/9)
+- **Framework**: ASP.NET Core MVC
 - **ORM**: Entity Framework Core (Code First)
 - **Patrón de diseño**: Repository Pattern con Repositorios Genéricos
-- **Mapeo**: AutoMapper para transformación entre ViewModels, Entities y DTOs
 - **OCR**: Tesseract OCR para procesamiento y validación de documentos de identidad
 
 ### Frontend
@@ -140,32 +138,10 @@ SADVO/
 ### 🖼️ Procesamiento OCR
 Sistema avanzado de reconocimiento óptico para validar documentos de identidad de forma automática y segura.
 
-### 📧 Sistema de Notificaciones
-- Confirmación automática de voto por email
-- Resumen detallado de selecciones realizadas
-- Integración con servicios SMTP
-
 ### 📊 Reportes Dinámicos
 - Resultados por puesto electivo
 - Porcentajes de participación
-- Análisis histórico de elecciones
 
-## 📋 Reglas de Negocio Importantes
-
-1. **Unicidad de Documentos**: Cada ciudadano debe tener una cédula única
-2. **Un Voto por Elector**: Sistema anti-fraude que previene votación múltiple
-3. **Candidatos por Partido**: Los candidatos pertenecen a un partido específico
-4. **Restricciones durante Elecciones**: Bloqueo de modificaciones durante votación activa
-5. **Eliminación Lógica**: Todas las entidades manejan estados activo/inactivo
-6. **Alianzas Políticas**: Control de solicitudes y aprobaciones entre partidos
-
-## 🤝 Contribuciones
-
-1. Fork del proyecto
-2. Crear rama para nueva funcionalidad (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit de cambios (`git commit -am 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
 
 ---
 
