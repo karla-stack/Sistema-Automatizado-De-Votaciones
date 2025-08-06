@@ -167,16 +167,6 @@ Sistema avanzado de reconocimiento óptico para validar documentos de identidad 
 4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
 5. Crear Pull Request
 
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 📞 Contacto y Soporte
-
-- **Institución**: Instituto Tecnológico de Las Américas (ITLA)
-- **Dirección**: Autopista Las Américas, Km. 27, PCSD, La Caleta, Boca Chica 11606
-- **Teléfono**: 809-738-4852
-
 ---
 
 **Desarrollado con ❤️ para democratizar el proceso electoral**
