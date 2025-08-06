@@ -3,6 +3,7 @@
 SADVO es una plataforma web completa de votación electrónica diseñada para gestionar de manera integral todo el ciclo electoral. El sistema permite desde el registro y validación segura de electores mediante autenticación con OCR de documentos, hasta la configuración y administración de procesos electorales, el despliegue de boletas con candidatos y partidos, y la emisión de votos de forma confidencial.
 
 Características Principales
+
 🔐 Sistema de Autenticación y Validación
 
 Validación de Identidad con OCR: Utiliza Tesseract OCR para verificar documentos de identidad
