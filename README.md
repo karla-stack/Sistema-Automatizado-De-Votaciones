@@ -1,4 +1,4 @@
-HEAD
+
 # Sistema-Automatizado-De-Votaciones (SADVO) 🗳️
 
 [![.NET](https://img.shields.io/badge/.NET-8.0|9.0-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
@@ -147,4 +147,3 @@ Sistema avanzado de reconocimiento óptico para validar documentos de identidad 
 ---
 
 **Desarrollado con ❤️ para democratizar el proceso electoral**
- 2a15851eb6bb5ac5788b8dc7c2b7ae415d87f0af
