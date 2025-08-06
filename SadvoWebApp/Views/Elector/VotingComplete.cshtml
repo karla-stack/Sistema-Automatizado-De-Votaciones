@@ -1,0 +1,108 @@
+﻿@using Sadvo.Core.Application.ViewModels.Elector
+<!-- =================================================================== -->
+<!-- Views/Elector/VotingComplete.cshtml - FINALIZACIÓN EXITOSA -->
+<!-- =================================================================== -->
+@model VotingCompleteViewModel
+@{
+    ViewData["Title"] = "Votación Completada";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white text-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-check-circle me-2"></i>
+                        ¡Votación Completada!
+                    </h3>
+                </div>
+                <div class="card-body text-center p-5">
+                    @if (Model.HasError)
+                    {
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            @Model.ErrorMessage
+                        </div>
+                    }
+
+                    <div class="mb-4">
+                        <i class="fas fa-medal text-success" style="font-size: 5rem;"></i>
+                    </div>
+
+                    <h4 class="text-success mb-4">@Model.CompletionMessage</h4>
+
+                    <div class="alert alert-info">
+                        <h6><i class="fas fa-info-circle me-2"></i>Información importante:</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li><i class="fas fa-check text-success me-2"></i>Sus votos han sido registrados correctamente</li>
+                            <li><i class="fas fa-envelope text-primary me-2"></i>Se ha enviado un resumen a su correo electrónico</li>
+                            <li><i class="fas fa-lock text-warning me-2"></i>Su voto es secreto y seguro</li>
+                            <li><i class="fas fa-ban text-danger me-2"></i>No podrá votar nuevamente en esta elección</li>
+                        </ul>
+                    </div>
+
+                    <div class="row text-muted mt-4">
+                        <div class="col-6">
+                            <small>
+                                <i class="fas fa-calendar me-1"></i>
+                                Fecha: @Model.CompletionTime.ToString("dd/MM/yyyy")
+                            </small>
+                        </div>
+                        <div class="col-6">
+                            <small>
+                                <i class="fas fa-clock me-1"></i>
+                                Hora: @Model.CompletionTime.ToString("HH:mm:ss")
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home me-2"></i>
+                            Ir al Inicio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <small class="text-muted">
+                    <i class="fas fa-shield-alt me-1"></i>
+                    Gracias por participar en el proceso democrático
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confetti animation -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<script>
+    // Animación de confetti al cargar la página
+    window.addEventListener('load', function() {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+
+        setTimeout(() => {
+            confetti({
+                particleCount: 50,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+        }, 250);
+
+        setTimeout(() => {
+            confetti({
+                particleCount: 50,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+        }, 400);
+    });
+</script>

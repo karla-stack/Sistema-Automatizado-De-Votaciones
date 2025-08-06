@@ -1,0 +1,111 @@
+﻿@model AsignacionCandidatoForm
+@{
+    ViewData["Title"] = "Nueva Asignación de Candidato a Puesto";
+    Layout = "_LayoutDirigente";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-user-plus"></i>
+                        Nueva Asignación de Candidato a Puesto
+                    </h3>
+                </div>
+                <div class="card-body">
+
+                    @* Mostrar mensaje de error de validación *@
+                    @if (!string.IsNullOrEmpty(Model?.Mensaje))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            @Model.Mensaje
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("AddAsignacionCandidato", "AsignacionCandidato", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        
+                        <!-- Candidato Político -->
+                        <div class="form-group mb-3">
+                            <label for="IdCandidato" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Candidato Político <span class="text-danger">*</span>
+                            </label>
+                            <select asp-for="IdCandidato" class="form-control">
+                                <option value="">-- Seleccione un candidato político --</option>
+                                @if (Model?.Candidatos != null)
+                                {
+                                    @foreach (var candidato in Model.Candidatos)
+                                    {
+                                        <option value="@candidato.Id">@candidato.Nombre @candidato.Apellido</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="IdCandidato" class="text-danger"></span>
+                        </div>
+
+                        <!-- Puesto Electivo -->
+                        <div class="form-group mb-3">
+                            <label for="IdPuestoElectivo" class="form-label">
+                                <i class="fas fa-briefcase"></i>
+                                Puesto Electivo <span class="text-danger">*</span>
+                            </label>
+                            <select asp-for="IdPuestoElectivo" class="form-control">
+                                <option value="">-- Seleccione un puesto electivo --</option>
+                                @if (Model?.Puestos != null)
+                                {
+                                    @foreach (var puesto in Model.Puestos)
+                                    {
+                                        <option value="@puesto.Id">@puesto.Nombre</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="IdPuestoElectivo" class="text-danger"></span>
+                        </div>
+
+                        <!-- Mensajes de error personalizados -->
+                        @if (ViewBag.ErrorMessage != null)
+                        {
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                @ViewBag.ErrorMessage
+                            </div>
+                        }
+
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Por favor complete todos los campos obligatorios.
+                            </div>
+                        }
+
+                        <!-- Botones de acción -->
+                        <div class="form-group mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="@Url.Action("AsignacionCandidatoView", "AsignacionCandidato")" class="btn btn-secondary btn-block">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Volver Atrás
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-success btn-block">
+                                        <i class="fas fa-save"></i>
+                                        Crear Asignación
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

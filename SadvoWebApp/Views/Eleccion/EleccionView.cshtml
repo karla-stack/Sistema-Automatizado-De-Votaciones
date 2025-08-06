@@ -1,0 +1,186 @@
+﻿@model Sadvo.Core.Application.ViewModels.Eleccion.EleccionesListViewModel
+
+@{
+    ViewData["Title"] = "Gestión de Elecciones";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-vote-yea mr-2"></i>
+                        Gestión de Elecciones
+                    </h3>
+                    @if (!Model.HayEleccionActiva)
+                    {
+                        <a href="@Url.Action("AddEleccion", "Eleccion")" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Nueva Elección
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="badge badge-warning badge-lg">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Hay una elección activa
+                        </span>
+                    }
+                </div>
+                <div class="card-body">
+                    <!-- Mensajes de alerta -->
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle"></i>
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-circle"></i>
+                            @TempData["ErrorMessage"]
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+
+                    @if (Model.elecciones.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th><i class="fas fa-hashtag"></i> ID</th>
+                                        <th><i class="fas fa-signature"></i> Nombre</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Fecha</th>
+                                        <th><i class="fas fa-users"></i> Puestos</th>
+                                        <th><i class="fas fa-flag"></i> Partidos</th>
+                                        <th><i class="fas fa-info-circle"></i> Estado</th>
+                                        <th><i class="fas fa-cogs"></i> Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var eleccion in Model.elecciones)
+                                    {
+                                        <tr>
+                                            <td>@eleccion.Id</td>
+                                            <td>
+                                                <strong>@eleccion.Nombre</strong>
+                                            </td>
+                                            <td>
+                                                <i class="fas fa-calendar"></i>
+                                                @eleccion.FechaFormateada
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-info">
+                                                    @eleccion.CantPuestos
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-secondary">
+                                                    @eleccion.CantPartidos
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge @eleccion.EstadoBadgeClass">
+                                                    @eleccion.EstadoTexto
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    @if (eleccion.EstaFinalizada)
+                                                    {
+                                                        <a href="@Url.Action("Resultados", "Eleccion", new { id = eleccion.Id })"
+                                                           class="btn btn-sm btn-success"
+                                                           title="Ver Resultados">
+                                                            <i class="fas fa-chart-bar"></i>
+                                                            Resultados
+                                                        </a>
+                                                    }
+                                                    else if (eleccion.EstaActiva)
+                                                    {
+                                                        <a href="@Url.Action("ConfirmarFinalizarEleccion", "Eleccion", new { id = eleccion.Id })"
+                                                           class="btn btn-sm btn-warning"
+                                                           title="Finalizar Elección">
+                                                            <i class="fas fa-stop-circle"></i>
+                                                            Finalizar
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">
+                                                            <i class="fas fa-clock"></i>
+                                                            En proceso
+                                                        </span>
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <div class="mb-4">
+                                <i class="fas fa-vote-yea fa-5x text-muted"></i>
+                            </div>
+                            <h4 class="text-muted">No hay elecciones registradas</h4>
+                            <p class="text-muted">Comience creando su primera elección</p>
+                            @if (!Model.HayEleccionActiva)
+                            {
+                                <a href="@Url.Action("AddEleccion", "Eleccion")" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-plus"></i> Crear Primera Elección
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .badge-lg {
+        font-size: 0.9em;
+        padding: 0.5em 0.75em;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+    }
+
+    .badge-warning {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .badge-secondary {
+        background-color: #6c757d;
+    }
+
+    .table th {
+        border-top: none;
+        font-weight: 600;
+    }
+
+    .btn-group .btn {
+        margin-right: 5px;
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #dee2e6;
+    }
+</style>

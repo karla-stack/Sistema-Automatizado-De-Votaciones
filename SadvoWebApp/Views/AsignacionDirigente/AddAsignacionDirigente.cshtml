@@ -1,0 +1,98 @@
+﻿@model AsignacionDirigenteFormViewModel
+@{
+    ViewData["Title"] = "Nueva Asignación de Dirigente Político";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-user-plus"></i>
+                        Nueva Asignación de Dirigente Político
+                    </h3>
+                </div>
+                <div class="card-body">
+
+                    @* Mostrar mensaje de error de validación *@
+                    @if (!string.IsNullOrEmpty(Model?.Mensaje))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            @Model.Mensaje
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+
+                    @using (Html.BeginForm("AddAsignacionDirigente", "AsignacionDirigente", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        
+                        <!-- Dirigente Político -->
+                        <div class="form-group mb-3">
+                            <label for="IdUsuario" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Dirigente Político <span class="text-danger">*</span>
+                            </label>
+                            <select asp-for="IdUsuario" asp-items="ViewBag.Usuarios" class="form-control">
+                                <option value="">-- Seleccione un dirigente político --</option>
+                            </select>
+                            <span asp-validation-for="IdUsuario" class="text-danger"></span>
+                        </div>
+
+                        <!-- Partido Político -->
+                        <div class="form-group mb-3">
+                            <label for="IdPartido" class="form-label">
+                                <i class="fas fa-flag"></i>
+                                Partido Político <span class="text-danger">*</span>
+                            </label>
+                            <select asp-for="IdPartido" asp-items="ViewBag.Partidos" class="form-control">
+                                <option value="">-- Seleccione un partido político --</option>
+                            </select>
+                            <span asp-validation-for="IdPartido" class="text-danger"></span>
+                        </div>
+
+                        <!-- Mensajes de error personalizados -->
+                        @if (ViewBag.ErrorMessage != null)
+                        {
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                @ViewBag.ErrorMessage
+                            </div>
+                        }
+
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Por favor complete todos los campos obligatorios.
+                            </div>
+                        }
+
+                        <!-- Botones de acción -->
+                        <div class="form-group mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="@Url.Action("AsignacionDirigentesView", "AsignacionDirigente")" class="btn btn-secondary btn-block">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Volver Atrás
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-success btn-block">
+                                        <i class="fas fa-save"></i>
+                                        Crear Relación
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

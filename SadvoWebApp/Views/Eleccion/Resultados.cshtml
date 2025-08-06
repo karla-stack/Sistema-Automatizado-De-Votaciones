@@ -1,0 +1,263 @@
+﻿@model Sadvo.Core.Application.ViewModels.Eleccion.EleccionResultadosViewModel
+
+@{
+    ViewData["Title"] = "Resultados de Elección";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid">
+    <!-- Encabezado -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="card-title mb-1">
+                                <i class="fas fa-trophy mr-2"></i>
+                                Resultados Oficiales
+                            </h2>
+                            <h4 class="mb-0">@Model.NombreEleccion</h4>
+                            <p class="mb-0 mt-2">
+                                <i class="fas fa-calendar-check"></i>
+                                Fecha: @Model.FechaEleccion.ToString("dd/MM/yyyy")
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <i class="fas fa-chart-line fa-3x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensajes de alerta -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i>
+            @TempData["ErrorMessage"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <!-- Resultados por puesto -->
+    @if (Model.Resultados.Any())
+    {
+        @foreach (var puesto in Model.Resultados)
+        {
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h4 class="card-title mb-0">
+                                <i class="fas fa-user-tie mr-2"></i>
+                                @puesto.NombrePuesto
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            @if (puesto.Candidatos.Any())
+                            {
+                                <!-- Gráfico de barras visual -->
+                                <div class="mb-4">
+                                    @foreach (var candidato in puesto.Candidatos.OrderByDescending(c => c.CantidadVotos))
+                                    {
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <div>
+                                                    <strong>@candidato.NombreCandidato</strong>
+                                                    <span class="badge badge-secondary ml-2">@candidato.SiglasPartido</span>
+                                                </div>
+                                                <div class="text-right">
+                                                    <span class="badge badge-primary badge-lg">
+                                                        @candidato.CantidadVotos votos
+                                                    </span>
+                                                    <span class="badge badge-success badge-lg ml-1">
+                                                        @candidato.PorcentajeFormateado
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="progress" style="height: 25px;">
+                                                <div class="progress-bar @GetProgressBarClass(candidato, puesto.Candidatos.Max(c => c.CantidadVotos))" 
+                                                     role="progressbar" 
+                                                     style="width: @candidato.Porcentaje%"
+                                                     aria-valuenow="@candidato.Porcentaje" 
+                                                     aria-valuemin="0" 
+                                                     aria-valuemax="100">
+                                                    @if (candidato.Porcentaje > 10)
+                                                    {
+                                                        <span class="font-weight-bold">@candidato.PorcentajeFormateado</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <small class="text-muted">
+                                                <i class="fas fa-flag"></i>
+                                                @candidato.Partido
+                                            </small>
+                                        </div>
+                                    }
+                                </div>
+
+                                <!-- Tabla de resultados detallados -->
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Posición</th>
+                                                <th>Candidato</th>
+                                                <th>Partido</th>
+                                                <th class="text-center">Votos</th>
+                                                <th class="text-center">Porcentaje</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                var posicion = 1;
+                                            }
+                                            @foreach (var candidato in puesto.Candidatos.OrderByDescending(c => c.CantidadVotos))
+                                            {
+                                                <tr class="@(posicion == 1 ? "table-success" : "")">
+                                                    <td>
+                                                        @if (posicion == 1)
+                                                        {
+                                                            <i class="fas fa-trophy text-warning"></i>
+                                                        }
+                                                        else if (posicion == 2)
+                                                        {
+                                                            <i class="fas fa-medal text-secondary"></i>
+                                                        }
+                                                        else if (posicion == 3)
+                                                        {
+                                                            <i class="fas fa-medal text-warning"></i>
+                                                        }
+                                                        @posicion°
+                                                    </td>
+                                                    <td>
+                                                        <strong>@candidato.NombreCandidato</strong>
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge badge-outline-secondary">
+                                                            @candidato.SiglasPartido
+                                                        </span>
+                                                        <br>
+                                                        <small class="text-muted">@candidato.Partido</small>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="badge badge-primary badge-lg">
+                                                            @candidato.CantidadVotos.ToString("N0")
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="badge badge-success badge-lg">
+                                                            @candidato.PorcentajeFormateado
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                posicion++;
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="table-info">
+                                                <td colspan="3"><strong>Total de Votos</strong></td>
+                                                <td class="text-center">
+                                                    <strong>@puesto.Candidatos.Sum(c => c.CantidadVotos).ToString("N0")</strong>
+                                                </td>
+                                                <td class="text-center">
+                                                    <strong>100.00%</strong>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-warning" role="alert">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    No hay candidatos registrados para este puesto.
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-warning text-center" role="alert">
+                    <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                    <h4>No hay resultados disponibles</h4>
+                    <p>No se encontraron resultados para esta elección.</p>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Botón de regreso -->
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center mt-4">
+                <a href="@Url.Action("EleccionView", "Eleccion")" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-arrow-left"></i>
+                    Volver a Elecciones
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .opacity-50 {
+        opacity: 0.5;
+    }
+    
+    .badge-lg {
+        font-size: 0.9em;
+        padding: 0.5em 0.75em;
+    }
+    
+    .progress {
+        background-color: #e9ecef;
+    }
+    
+    .progress-bar {
+        font-size: 0.875em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .table-success {
+        background-color: #d4edda !important;
+    }
+    
+    .badge-outline-secondary {
+        color: #6c757d;
+        border: 1px solid #6c757d;
+        background-color: transparent;
+    }
+    
+    .card-header {
+        border-bottom: 2px solid #dee2e6;
+    }
+</style>
+
+@functions {
+    private string GetProgressBarClass(CandidatoResultadoViewModel candidato, int maxVotos)
+    {
+        if (candidato.CantidadVotos == maxVotos)
+            return "progress-bar-success";
+        else if (candidato.Porcentaje >= 25)
+            return "progress-bar-info";
+        else if (candidato.Porcentaje >= 10)
+            return "progress-bar-warning";
+        else
+            return "progress-bar-danger";
+    }
+}

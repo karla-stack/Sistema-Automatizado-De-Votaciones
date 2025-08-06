@@ -1,0 +1,183 @@
+﻿@using Sadvo.Core.Application.ViewModels.Elector
+<!-- =================================================================== -->
+<!-- Views/Elector/VoteForPuesto.cshtml - VOTACIÓN POR CANDIDATOS -->
+<!-- =================================================================== -->
+@model VoteForPuestoViewModel
+@{
+    ViewData["Title"] = $"Votar por {Model.PuestoNombre}";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-vote-yea me-2"></i>
+                        Votar por @Model.PuestoNombre
+                    </h4>
+                    @if (!string.IsNullOrEmpty(Model.PuestoDescripcion))
+                    {
+                        <small class="d-block mt-1">@Model.PuestoDescripcion</small>
+                    }
+                </div>
+                <div class="card-body">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            @Html.ValidationSummary(false)
+                        </div>
+                    }
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Seleccione un candidato de su preferencia.</strong>
+                        Su voto es secreto y no podrá ser modificado una vez enviado.
+                    </div>
+
+                    <form method="post" asp-action="VoteForPuesto">
+                        <input type="hidden" asp-for="PuestoId" />
+                        <input type="hidden" asp-for="PuestoNombre" />
+                        <input type="hidden" asp-for="PuestoDescripcion" />
+
+                        <div class="row">
+                            @for (int i = 0; i < Model.Candidatos.Count; i++)
+                            {
+                                var candidato = Model.Candidatos[i];
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card h-100 candidate-card" onclick="selectCandidate(@candidato.CandidatoId)">
+                                        <div class="card-body text-center">
+                                            <div class="mb-3">
+                                                <img src="@candidato.FotoUrl"
+                                                     alt="@candidato.FullName"
+                                                     class="rounded-circle candidate-photo"
+                                                     style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #dee2e6;">
+                                            </div>
+                                            <h5 class="card-title">@candidato.FullName</h5>
+
+                                            <div class="mb-3">
+                                                <img src="@candidato.LogoUrl"
+                                                     alt="@candidato.PartidoNombre"
+                                                     class="party-logo"
+                                                     style="height: 40px; max-width: 80px; object-fit: contain;">
+                                            </div>
+
+                                            <p class="card-text">
+                                                <strong>@candidato.PartidoDisplay</strong>
+                                            </p>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input candidate-radio"
+                                                       type="radio"
+                                                       name="SelectedCandidatoId"
+                                                       value="@candidato.CandidatoId"
+                                                       id="candidate_@candidato.CandidatoId"
+                                                       onchange="updateSelection()">
+                                                <label class="form-check-label fw-bold" for="candidate_@candidato.CandidatoId">
+                                                    Seleccionar
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        @if (!Model.Candidatos.Any())
+                        {
+                            <div class="alert alert-warning text-center">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                No hay candidatos disponibles para este puesto.
+                            </div>
+                        }
+
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-success btn-lg w-100" id="voteBtn" disabled>
+                                    <i class="fas fa-check me-2"></i>
+                                    Confirmar Voto
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="@Url.Action("SelectPuesto")" class="btn btn-outline-secondary btn-lg w-100">
+                                    <i class="fas fa-arrow-left me-2"></i>
+                                    Regresar
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .candidate-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid #dee2e6;
+    }
+
+        .candidate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #007bff;
+        }
+
+        .candidate-card.selected {
+            border-color: #28a745;
+            background-color: #f8fff9;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(40,167,69,0.3);
+        }
+
+    .candidate-photo {
+        transition: all 0.3s ease;
+    }
+
+    .candidate-card.selected .candidate-photo {
+        border-color: #28a745 !important;
+    }
+</style>
+
+<script>
+    function selectCandidate(candidateId) {
+        // Limpiar selecciones anteriores
+        document.querySelectorAll('.candidate-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+
+        document.querySelectorAll('.candidate-radio').forEach(radio => {
+            radio.checked = false;
+        });
+
+        // Seleccionar el candidato clickeado
+        const radio = document.getElementById('candidate_' + candidateId);
+        radio.checked = true;
+
+        const card = radio.closest('.candidate-card');
+        card.classList.add('selected');
+
+        updateSelection();
+    }
+
+    function updateSelection() {
+        const selectedRadio = document.querySelector('.candidate-radio:checked');
+        const voteBtn = document.getElementById('voteBtn');
+
+        if (selectedRadio) {
+            voteBtn.disabled = false;
+
+            // Actualizar estilos de las tarjetas
+            document.querySelectorAll('.candidate-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            selectedRadio.closest('.candidate-card').classList.add('selected');
+        } else {
+            voteBtn.disabled = true;
+        }
+    }
+</script>

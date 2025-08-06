@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36202.13 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D473F7D0-CA88-4B4C-98DB-34AE1611BCEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F88EC6C1-EE55-4708-AF3A-9E220BA2BC13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{E1C6EF5A-A26D-4545-8F24-4897A2FC5D84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{E0EF2DCB-DD74-4B20-9B24-95D5D6A98115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadvoWebApp", "SadvoWebApp\SadvoWebApp.csproj", "{0CD38BE4-F7ED-46F5-862D-305B19EE59EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sadvo.Infrastructure.Persistence", "Sadvo.Infrastructure.Persistence\Sadvo.Infrastructure.Persistence.csproj", "{0795F43D-D8F7-460E-ACCB-5300CDFF02F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sadvo.Core.Domain", "SADVO.Core.Domain\Sadvo.Core.Domain.csproj", "{575112BC-DF49-4C27-AC27-E659D343EF57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sadvo.Core.Application", "Sadvo.Core.Application\Sadvo.Core.Application.csproj", "{DC0AC201-E440-40EF-95D3-912D4ADB7163}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CD38BE4-F7ED-46F5-862D-305B19EE59EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CD38BE4-F7ED-46F5-862D-305B19EE59EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CD38BE4-F7ED-46F5-862D-305B19EE59EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CD38BE4-F7ED-46F5-862D-305B19EE59EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0795F43D-D8F7-460E-ACCB-5300CDFF02F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0795F43D-D8F7-460E-ACCB-5300CDFF02F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0795F43D-D8F7-460E-ACCB-5300CDFF02F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0795F43D-D8F7-460E-ACCB-5300CDFF02F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{575112BC-DF49-4C27-AC27-E659D343EF57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{575112BC-DF49-4C27-AC27-E659D343EF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{575112BC-DF49-4C27-AC27-E659D343EF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{575112BC-DF49-4C27-AC27-E659D343EF57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC0AC201-E440-40EF-95D3-912D4ADB7163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC0AC201-E440-40EF-95D3-912D4ADB7163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC0AC201-E440-40EF-95D3-912D4ADB7163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC0AC201-E440-40EF-95D3-912D4ADB7163}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D473F7D0-CA88-4B4C-98DB-34AE1611BCEE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{F88EC6C1-EE55-4708-AF3A-9E220BA2BC13} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E1C6EF5A-A26D-4545-8F24-4897A2FC5D84} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E0EF2DCB-DD74-4B20-9B24-95D5D6A98115} = {E1C6EF5A-A26D-4545-8F24-4897A2FC5D84}
+		{0CD38BE4-F7ED-46F5-862D-305B19EE59EB} = {E0EF2DCB-DD74-4B20-9B24-95D5D6A98115}
+		{0795F43D-D8F7-460E-ACCB-5300CDFF02F0} = {F88EC6C1-EE55-4708-AF3A-9E220BA2BC13}
+		{575112BC-DF49-4C27-AC27-E659D343EF57} = {D473F7D0-CA88-4B4C-98DB-34AE1611BCEE}
+		{DC0AC201-E440-40EF-95D3-912D4ADB7163} = {D473F7D0-CA88-4B4C-98DB-34AE1611BCEE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0FC47A89-47D1-437E-8564-E59CD3003818}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,93 @@
+﻿<!-- =================================================================== -->
+<!-- Views/Home/Index.cshtml - PANTALLA INICIAL SIMPLE PARA CIUDADANOS -->
+<!-- =================================================================== -->
+@{
+    ViewData["Title"] = "Sistema de Votación Electrónica";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Header simple sin login -->
+    <div class="bg-primary text-white py-4">
+        <div class="container text-center">
+            <h1><i class="fas fa-vote-yea me-2"></i>Sistema de Votación Electrónica</h1>
+            <p class="mb-0">Ejerce tu derecho al voto de forma segura y transparente</p>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4><i class="fas fa-id-card me-2"></i>Identificación del Elector</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                @TempData["ErrorMessage"]
+                            </div>
+                        }
+
+                        <form method="post" asp-controller="Elector" asp-action="Index">
+                            <div class="mb-4">
+                                <label for="citizenIdCard" class="form-label">
+                                    <i class="fas fa-id-card me-2"></i>
+                                    Número de Documento de Identidad
+                                </label>
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       id="citizenIdCard"
+                                       name="citizenIdCard"
+                                       placeholder="000-0000000-0"
+                                       maxlength="13"
+                                       required
+                                       oninput="formatCedula(this)">
+                                <div class="form-text">
+                                    Ingrese su número de cédula sin guiones
+                                </div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-arrow-right me-2"></i>
+                                    Votar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <small class="text-muted">
+                        <i class="fas fa-shield-alt me-1"></i>
+                        Su voto es secreto y seguro
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function formatCedula(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                input.value = value;
+            } else {
+                input.value = value.substring(0, 11);
+            }
+        }
+    </script>
+</body>
+</html>

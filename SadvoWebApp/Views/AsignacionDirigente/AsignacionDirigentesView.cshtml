@@ -1,0 +1,103 @@
+﻿@model AsignacionDirigenteListViewModel
+@{
+    ViewData["Title"] = "Asignación de Dirigentes Políticos";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-users-cog"></i>
+                        Asignación de Dirigentes Políticos
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <!-- Botón para agregar nueva relación -->
+                    <div class="mb-3">
+                        @if (ViewBag.EleccionActiva == null || ViewBag.EleccionActiva == false)
+                        {
+                            <a href="@Url.Action("AddAsignacionDirigente", "AsignacionDirigente")" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Agregar Nueva Relación
+                            </a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary" disabled>
+                                <i class="fas fa-plus"></i>
+                                Agregar Nueva Relación
+                            </button>
+                            <div class="alert alert-warning mt-2">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                No se pueden crear o eliminar relaciones mientras hay una elección activa.
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Tabla de relaciones -->
+                    @if (Model != null && Model.lista != null && Model.lista.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Nombre del Usuario</th>
+                                        <th>Siglas del Partido</th>
+                                        <th width="120">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.lista)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <i class="fas fa-user"></i>
+                                                @item.NombreUsuario
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(item.SiglasPartido))
+                                                {
+                                                    <span class="badge badge-info" style="color: black;">@item.SiglasPartido</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">Sin partido asignado</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (ViewBag.EleccionActiva == null || ViewBag.EleccionActiva == false)
+                                                {
+                                                    <a href="@Url.Action("DeleteAsignacionDirigente", "AsignacionDirigente", new { Id = item.Id })" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-trash"></i>
+                                                        Eliminar
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-secondary btn-sm" disabled>
+                                                        <i class="fas fa-trash"></i>
+                                                        Eliminar
+                                                    </button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info text-center">
+                            <i class="fas fa-info-circle"></i>
+                            No hay relaciones entre dirigentes y partidos políticos registradas.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

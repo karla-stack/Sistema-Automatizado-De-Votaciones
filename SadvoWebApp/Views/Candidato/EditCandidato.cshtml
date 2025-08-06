@@ -1,0 +1,293 @@
+﻿@using Sadvo.Core.Domain.Enums
+@model Sadvo.Core.Application.ViewModels.Candidato.CandidatoViewModel
+@{
+    ViewData["Title"] = "Editar Candidato";
+    bool eleccionActiva = ViewBag.EleccionActiva ?? false;
+    Layout = "_LayoutDirigente";
+}
+
+@if (eleccionActiva)
+{
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-1"></i>
+                            No se pueden editar candidatos mientras hay una elección activa.
+                        </div>
+                        <a href="@Url.Action("CandidatoView")" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>
+                            Volver al Listado
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-user-edit me-2"></i>
+                            Editar Candidato
+                        </h4>
+                    </div>
+
+                    <div class="card-body">
+                        @if (!string.IsNullOrEmpty(Model.Mensaje))
+                        {
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                @Model.Mensaje
+                            </div>
+                        }
+
+                        <form asp-action="EditCandidato" method="post" enctype="multipart/form-data">
+                            <input asp-for="Id" type="hidden">
+                            <input asp-for="PartidoPoliticoId" type="hidden">
+                            <input asp-for="Estado" type="hidden">
+                            <input asp-for="PuestoAsociado" type="hidden">
+                            <input asp-for="FotoPath" type="hidden">
+
+                            <!-- Información del candidato -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        <strong>Editando:</strong> @Model.Nombre @Model.Apellido
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Campos de edición -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="Nombre" class="form-label fw-bold">
+                                            <i class="fas fa-user me-1"></i>
+                                            Nombre <span class="text-danger">*</span>
+                                        </label>
+                                        <input asp-for="Nombre" class="form-control form-control-lg"
+                                               placeholder="Ingrese el nombre del candidato" required>
+                                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="Apellido" class="form-label fw-bold">
+                                            <i class="fas fa-user me-1"></i>
+                                            Apellido <span class="text-danger">*</span>
+                                        </label>
+                                        <input asp-for="Apellido" class="form-control form-control-lg"
+                                               placeholder="Ingrese el apellido del candidato" required>
+                                        <span asp-validation-for="Apellido" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Foto actual -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <label class="form-label fw-bold">
+                                        <i class="fas fa-camera me-1"></i>
+                                        Foto Actual
+                                    </label>
+                                    <div class="d-flex align-items-center">
+                                        @if (!string.IsNullOrEmpty(Model.FotoPath))
+                                        {
+                                            <img src="@Model.FotoPath" alt="Foto actual"
+                                                 class="img-thumbnail me-3"
+                                                 style="width: 120px; height: 120px; object-fit: cover;">
+                                            <div>
+                                                <p class="mb-1 text-success">
+                                                    <i class="fas fa-check-circle me-1"></i>
+                                                    Foto cargada correctamente
+                                                </p>
+                                                <small class="text-muted">
+                                                    Puede cambiar la foto seleccionando una nueva imagen abajo.
+                                                </small>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="bg-light border rounded d-flex align-items-center justify-content-center me-3"
+                                                 style="width: 120px; height: 120px;">
+                                                <i class="fas fa-user fa-3x text-muted"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-1 text-warning">
+                                                    <i class="fas fa-exclamation-triangle me-1"></i>
+                                                    Sin foto
+                                                </p>
+                                                <small class="text-muted">
+                                                    Seleccione una imagen para agregar una foto al candidato.
+                                                </small>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Nueva foto (OPCIONAL en editar) -->
+                            <div class="mb-4">
+                                <label asp-for="Foto" class="form-label fw-bold">
+                                    <i class="fas fa-upload me-1"></i>
+                                    Nueva Foto (Opcional)
+                                </label>
+                                <input asp-for="Foto" class="form-control" accept="image/*" id="fotoInput">
+                                <span asp-validation-for="Foto" class="text-danger"></span>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Seleccione una nueva imagen si desea cambiar la foto actual.
+                                    Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 5MB.
+                                </div>
+
+                                <!-- Preview de nueva imagen -->
+                                <div id="imagePreview" class="mt-2" style="display: none;">
+                                    <label class="form-label">Vista Previa de Nueva Foto:</label>
+                                    <div>
+                                        <img id="previewImg" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" alt="Vista previa">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Estado actual -->
+                            <div class="mb-4">
+                                <div class="alert @(Model.Estado == Actividad.Activo ? "alert-success" : "alert-secondary")">
+                                    <h6 class="mb-1">
+                                        <i class="fas @(Model.Estado == Actividad.Activo ? "fa-check-circle" : "fa-times-circle") me-1"></i>
+                                        Estado Actual:
+                                        <span class="badge @(Model.Estado == Actividad.Activo ? "bg-success" : "bg-secondary") ms-1">
+                                            @(Model.Estado == Actividad.Activo ? "ACTIVO" : "INACTIVO")
+                                        </span>
+                                    </h6>
+                                    <small class="mb-0">
+                                        @if (Model.Estado == Actividad.Activo)
+                                        {
+                                            <text>El candidato puede participar en elecciones y ser asignado a puestos.</text>
+                                        }
+                                        else
+                                        {
+                                            <text>El candidato no puede participar en elecciones hasta ser reactivado.</text>
+                                        }
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Botones de acción -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="@Url.Action("CandidatoView")" class="btn btn-secondary btn-lg">
+                                    <i class="fas fa-arrow-left me-2"></i>
+                                    Volver al Listado
+                                </a>
+
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-save me-2"></i>
+                                        Guardar Cambios
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .form-control-lg {
+            border-radius: 8px;
+        }
+
+        .card {
+            border-radius: 12px;
+            border: none;
+        }
+
+        .btn-lg {
+            border-radius: 8px;
+            padding: 12px 24px;
+        }
+
+        .alert {
+            border-radius: 8px;
+        }
+
+        .img-thumbnail {
+            border-radius: 8px;
+        }
+    </style>
+}
+
+<!-- JavaScript para preview de imagen -->
+<script>
+    document.getElementById('fotoInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+
+        if (file) {
+            // Validar tamaño
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            if (file.size > maxSize) {
+                alert('El archivo es demasiado grande. El tamaño máximo es 5MB.');
+                e.target.value = '';
+                preview.style.display = 'none';
+                return;
+            }
+
+            // Validar tipo
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!allowedTypes.includes(file.type)) {
+                alert('Tipo de archivo no válido. Solo se permiten JPG, PNG y GIF.');
+                e.target.value = '';
+                preview.style.display = 'none';
+                return;
+            }
+
+            // Mostrar preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+
+    // Validación del formulario
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const fileInput = document.getElementById('fotoInput');
+
+        // En editar, la foto es opcional
+        // Solo validar si se seleccionó un archivo
+        if (fileInput.files && fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const maxSize = 5 * 1024 * 1024; // 5MB
+
+            if (file.size > maxSize) {
+                e.preventDefault();
+                alert('El archivo es demasiado grande. El tamaño máximo es 5MB.');
+                return false;
+            }
+
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!allowedTypes.includes(file.type)) {
+                e.preventDefault();
+                alert('Tipo de archivo no válido. Solo se permiten JPG, PNG y GIF.');
+                return false;
+            }
+        }
+    });
+</script>

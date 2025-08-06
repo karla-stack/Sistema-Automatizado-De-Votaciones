@@ -1,0 +1,231 @@
+﻿@model Sadvo.Core.Application.ViewModels.Candidato.CandidatoViewModel
+@{
+    ViewData["Title"] = "Crear Candidato";
+    bool eleccionActiva = ViewBag.EleccionActiva ?? false;
+    Layout = "_LayoutDirigente";
+}
+
+@if (eleccionActiva)
+{
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <div class="alert alert-danger border-0">
+                            <i class="fas fa-exclamation-triangle me-2 fa-2x text-danger"></i>
+                            <h5 class="mb-2">Elección Activa</h5>
+                            <p class="mb-3">No se pueden crear candidatos mientras hay una elección activa.</p>
+                        </div>
+                        <a href="@Url.Action("CandidatoView")" class="btn btn-secondary btn-lg">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Volver al Listado
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-user-plus me-2"></i>
+                            Crear Nuevo Candidato
+                        </h4>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Mensajes -->
+                        @if (!string.IsNullOrEmpty(Model.Mensaje))
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Error:</strong> @Model.Mensaje
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <form asp-action="AddCandidato" method="post" enctype="multipart/form-data" novalidate>
+                            <!-- Información básica -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="Nombre" class="form-label fw-bold">
+                                            <i class="fas fa-user me-1 text-primary"></i>
+                                            Nombre <span class="text-danger">*</span>
+                                        </label>
+                                        <input asp-for="Nombre" class="form-control form-control-lg"
+                                               placeholder="Ingrese el nombre del candidato"
+                                               required maxlength="50">
+                                        <span asp-validation-for="Nombre" class="text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label asp-for="Apellido" class="form-label fw-bold">
+                                            <i class="fas fa-user me-1 text-primary"></i>
+                                            Apellido <span class="text-danger">*</span>
+                                        </label>
+                                        <input asp-for="Apellido" class="form-control form-control-lg"
+                                               placeholder="Ingrese el apellido del candidato"
+                                               required maxlength="50">
+                                        <span asp-validation-for="Apellido" class="text-danger small"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Foto del candidato -->
+                            <div class="mb-4">
+                                <label asp-for="Foto" class="form-label fw-bold">
+                                    <i class="fas fa-camera me-1 text-primary"></i>
+                                    Foto del Candidato <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="border border-2 border-dashed rounded p-4 text-center bg-light">
+                                    <div class="mb-3">
+                                        <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
+                                        <p class="mb-2 text-muted">Seleccione una imagen para el candidato</p>
+                                    </div>
+
+                                    <input asp-for="Foto"
+                                           class="form-control form-control-lg"
+                                           accept="image/jpeg,image/png,image/gif"
+                                           required>
+                                    <span asp-validation-for="Foto" class="text-danger small"></span>
+
+                                    <div class="form-text mt-2">
+                                        <div class="row text-center">
+                                            <div class="col-md-4">
+                                                <i class="fas fa-file-image text-info me-1"></i>
+                                                <small>Formatos: JPG, PNG, GIF</small>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <i class="fas fa-weight-hanging text-warning me-1"></i>
+                                                <small>Máximo: 5MB</small>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <i class="fas fa-expand-arrows-alt text-success me-1"></i>
+                                                <small>Recomendado: 300x300px</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Información adicional -->
+                            <div class="alert alert-info border-0 shadow-sm">
+                                <div class="d-flex align-items-start">
+                                    <i class="fas fa-info-circle me-3 mt-1 text-info"></i>
+                                    <div>
+                                        <h6 class="mb-1">Información importante:</h6>
+                                        <ul class="mb-0 small">
+                                            <li>El candidato será creado en estado <strong>activo</strong></li>
+                                            <li>Se asociará automáticamente a su partido político</li>
+                                            <li>La foto es obligatoria y se redimensionará automáticamente</li>
+                                            <li>Podrá asignar un puesto específico después de la creación</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Botones -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="@Url.Action("CandidatoView")" class="btn btn-secondary btn-lg">
+                                    <i class="fas fa-arrow-left me-2"></i>
+                                    Volver Atrás
+                                </a>
+
+                                <button type="submit" class="btn btn-success btn-lg px-4">
+                                    <i class="fas fa-save me-2"></i>
+                                    Crear Candidato
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- CSS mejorado sin JavaScript -->
+<style>
+    .form-control-lg {
+        border-radius: 0.5rem;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+        .form-control-lg:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+        }
+
+    .card {
+        border: none;
+        border-radius: 1rem;
+    }
+
+    .card-header {
+        border-radius: 1rem 1rem 0 0 !important;
+        border: none;
+    }
+
+    .btn-lg {
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
+    }
+
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+    }
+
+    .border-dashed {
+        border-style: dashed !important;
+        transition: all 0.3s ease;
+    }
+
+        .border-dashed:hover {
+            border-color: #0d6efd !important;
+            background-color: #f8f9ff !important;
+        }
+
+    .alert {
+        border-radius: 0.75rem;
+    }
+
+    .shadow {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    }
+
+    /* Animación sutil para los iconos */
+    .fa-cloud-upload-alt {
+        animation: float 3s ease-in-out infinite;
+    }
+
+
+    .form-control-lg {
+        font-size: 1rem;
+    }
+
+  
+</style>

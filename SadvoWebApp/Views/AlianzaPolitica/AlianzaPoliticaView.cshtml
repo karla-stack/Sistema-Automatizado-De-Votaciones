@@ -1,0 +1,278 @@
+﻿@model AlianzaPoliticaIndexViewModel
+@{
+    ViewData["Title"] = "Alianzas Políticas";
+    Layout = "_LayoutDirigente";
+}
+
+<div class="container-fluid">
+    <!-- Mensajes de éxito/error -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            <i class="fas fa-check-circle"></i>
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            <i class="fas fa-exclamation-triangle"></i>
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Mensaje si no tiene partido asignado -->
+    @if (Model.SinPartido)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                        <h4>Sin Partido Asignado</h4>
+                        <p>El dirigente no tiene un partido político asignado. Contacte al administrador.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- 1. SOLICITUDES PENDIENTES POR RESPONDER -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-clock"></i>
+                            Solicitudes Pendientes por Responder (@Model.TotalSolicitudesPendientes)
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.TieneSolicitudesPendientes)
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Partido Solicitante</th>
+                                            <th>Fecha Solicitud</th>
+                                            <th width="200">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var solicitud in Model.SolicitudesPendientes)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <i class="fas fa-flag"></i>
+                                                    @solicitud.PartidoCompleto
+                                                </td>
+                                                <td>@solicitud.FechaFormateada</td>
+                                                <td>
+                                                    @if (!Model.EleccionActiva)
+                                                    {
+                                                        <form method="post" style="display: inline;">
+                                                            <button type="submit" 
+                                                                    asp-action="AceptarSolicitud" 
+                                                                    asp-route-id="@solicitud.Id"
+                                                                    class="btn btn-success btn-sm"
+                                                                    onclick="return confirm('¿Está seguro que desea aceptar esta solicitud?');">
+                                                                <i class="fas fa-check"></i>
+                                                                Aceptar
+                                                            </button>
+                                                        </form>
+                                                        <form method="post" style="display: inline;">
+                                                            <button type="submit" 
+                                                                    asp-action="RechazarSolicitud" 
+                                                                    asp-route-id="@solicitud.Id"
+                                                                    class="btn btn-danger btn-sm"
+                                                                    onclick="return confirm('¿Está seguro que desea rechazar esta solicitud?');">
+                                                                <i class="fas fa-times"></i>
+                                                                Rechazar
+                                                            </button>
+                                                        </form>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-secondary btn-sm" disabled>
+                                                            <i class="fas fa-check"></i>
+                                                            Aceptar
+                                                        </button>
+                                                        <button class="btn btn-secondary btn-sm" disabled>
+                                                            <i class="fas fa-times"></i>
+                                                            Rechazar
+                                                        </button>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info text-center">
+                                <i class="fas fa-info-circle"></i>
+                                No hay solicitudes pendientes por responder.
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. SOLICITUDES REALIZADAS -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="card-title mb-0">
+                                <i class="fas fa-paper-plane"></i>
+                                Solicitudes Realizadas (@Model.TotalSolicitudesRealizadas)
+                            </h3>
+                            @if (!Model.EleccionActiva)
+                            {
+                                <a href="@Url.Action("CrearSolicitud", "AlianzaPolitica")" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i>
+                                    Nueva Solicitud de Alianza
+                                </a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-secondary" disabled>
+                                    <i class="fas fa-plus"></i>
+                                    Nueva Solicitud de Alianza
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.EleccionActiva)
+                        {
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                No se pueden crear o eliminar solicitudes mientras exista una elección activa.
+                            </div>
+                        }
+
+                        @if (Model.TieneSolicitudesRealizadas)
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Partido Receptor</th>
+                                            <th>Fecha Solicitud</th>
+                                            <th>Estado</th>
+                                            <th width="120">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var solicitud in Model.SolicitudesRealizadas)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <i class="fas fa-flag"></i>
+                                                    @solicitud.PartidoCompleto
+                                                </td>
+                                                <td>@solicitud.FechaFormateada</td>
+                                                <td>
+                                                    <span class="badge @solicitud.EstadoBadgeClass" style="color: black">
+                                                        @solicitud.EstadoTexto
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    @if (!Model.EleccionActiva)
+                                                    {
+                                                        <form method="post" style="display: inline;">
+                                                            <button type="submit" 
+                                                                    asp-action="EliminarSolicitud" 
+                                                                    asp-route-id="@solicitud.Id"
+                                                                    class="btn btn-danger btn-sm"
+                                                                    onclick="return confirm('¿Está seguro que desea eliminar esta solicitud?');">
+                                                                <i class="fas fa-trash"></i>
+                                                                Eliminar
+                                                            </button>
+                                                        </form>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-secondary btn-sm" disabled>
+                                                            <i class="fas fa-trash"></i>
+                                                            Eliminar
+                                                        </button>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info text-center">
+                                <i class="fas fa-info-circle"></i>
+                                No hay solicitudes realizadas.
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. ALIANZAS ACTIVAS -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-handshake"></i>
+                            Alianzas Activas (@Model.TotalAlianzasActivas)
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.TieneAlianzasActivas)
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Partido Aliado</th>
+                                            <th>Fecha de Aceptación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var alianza in Model.AlianzasActivas)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <i class="fas fa-flag text-success"></i>
+                                                    @alianza.PartidoCompleto
+                                                </td>
+                                                <td>@alianza.FechaFormateada</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info text-center">
+                                <i class="fas fa-info-circle"></i>
+                                No hay alianzas políticas activas.
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

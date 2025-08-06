@@ -1,0 +1,176 @@
+﻿@model Sadvo.Core.Application.ViewModels.Eleccion.EleccionViewModel
+
+@{
+    ViewData["Title"] = "Crear Nueva Elección";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-plus-circle mr-2"></i>
+                        Crear Nueva Elección
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model.Mensaje))
+                    {
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            @Model.Mensaje
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+
+                    @if (Model.MensajesValidacion.Any())
+                    {
+                        <div class="alert alert-info" role="alert">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-info-circle"></i>
+                                Requisitos del Sistema:
+                            </h6>
+                            <ul class="mb-0">
+                                @foreach (var mensaje in Model.MensajesValidacion)
+                                {
+                                    <li>@mensaje</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    @if (Model.PuedeCrearEleccion)
+                    {
+                        <form method="post" asp-action="AddEleccion">
+                            <div class="form-group">
+                                <label asp-for="Nombre" class="form-label">
+                                    <i class="fas fa-signature"></i>
+                                    Nombre de la Elección *
+                                </label>
+                                <input asp-for="Nombre" 
+                                       class="form-control" 
+                                       placeholder="Ej: Elecciones Presidenciales 2024"
+                                       required />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                                <small class="form-text text-muted">
+                                    Ingrese un nombre descriptivo para la elección
+                                </small>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="FechaRealizacion" class="form-label">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Fecha de Realización *
+                                </label>
+                                <input asp-for="FechaRealizacion" 
+                                       type="date" 
+                                       class="form-control"
+                                       required />
+                                <span asp-validation-for="FechaRealizacion" class="text-danger"></span>
+                                <small class="form-text text-muted">
+                                    La fecha debe ser posterior a hoy
+                                </small>
+                            </div>
+
+                            <div class="form-group mt-4">
+                                <div class="d-flex justify-content-between">
+                                    <a href="@Url.Action("EleccionView", "Eleccion")" 
+                                       class="btn btn-secondary">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Cancelar
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i>
+                                        Crear Elección
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-exclamation-circle"></i>
+                                No se puede crear una nueva elección
+                            </h6>
+                            <p class="mb-0">
+                                Para poder crear una elección, debe cumplir con todos los requisitos mostrados arriba.
+                            </p>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <a href="@Url.Action("EleccionView", "Eleccion")" 
+                               class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i>
+                                Volver a Elecciones
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Información adicional -->
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-6">
+        <div class="card border-info">
+            <div class="card-header bg-info text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-lightbulb"></i>
+                    Información Importante
+                </h6>
+            </div>
+            <div class="card-body">
+                <ul class="mb-0">
+                    <li>Una elección creada estará en estado "En Proceso" hasta que sea activada.</li>
+                    <li>Solo puede haber una elección activa a la vez en el sistema.</li>
+                    <li>Una vez creada, podrá configurar candidatos y puestos electivos.</li>
+                    <li>La fecha de realización debe ser posterior a la fecha actual.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .alert-heading {
+        font-weight: 600;
+    }
+    
+    .card-header.bg-info {
+        border-bottom: 2px solid #17a2b8;
+    }
+    
+    .btn {
+        font-weight: 500;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Establecer fecha mínima como mañana
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            var tomorrowString = tomorrow.toISOString().split('T')[0];
+            $('#FechaRealizacion').attr('min', tomorrowString);
+        });
+    </script>
+}

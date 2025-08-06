@@ -1,0 +1,120 @@
+﻿@model CiudadanoViewModel
+@{
+    ViewData["Title"] = ViewBag.IsEdit == true ? "Editar ciudadano" : "Crear ciudadano";
+    bool isEdit = ViewBag.IsEdit ?? false;
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <i class="fas @(isEdit ? "fa-edit" : "fa-plus")"></i>
+                        @(isEdit ? "Editar ciudadano" : "Crear ciudadano")
+                    </h2>
+                </div>
+
+                <div class="card-body">
+
+                    @* Mostrar mensaje de error de validación *@
+                    @if (!string.IsNullOrEmpty(Model?.Mensaje))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            @Model.Mensaje
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+                    <form asp-action="@(isEdit ? "EditCiudadano" : "AddCiudadano")" method="post">
+                        @if (isEdit)
+                        {
+                            <input asp-for="Id" type="hidden" />
+                            <input asp-for="Estado" type="hidden" />
+                        }
+
+                        <div class="mb-3">
+                            <label asp-for="Nombre" class="form-label fw-bold">
+                                Nombre del ciudadano <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Nombre"
+                                   class="form-control @(ViewData.ModelState.IsValid ? "" : (ViewData.ModelState["Nombre"]?.Errors.Count > 0 ? "is-invalid" : ""))"
+                                   placeholder="Ingrese el nombre del ciudadano"
+                                   maxlength="100" />
+                            <span asp-validation-for="Nombre" class="invalid-feedback"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Apellido" class="form-label fw-bold">
+                                Apellido del ciudadano <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Apellido"
+                                   class="form-control @(ViewData.ModelState.IsValid ? "" : (ViewData.ModelState["Apellido"]?.Errors.Count > 0 ? "is-invalid" : ""))"
+                                   placeholder="Ingrese el apellido del ciudadano"
+                                   maxlength="100" />
+                            <span asp-validation-for="Apellido" class="invalid-feedback"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-bold">
+                                Email <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Email"
+                                   class="form-control @(ViewData.ModelState.IsValid ? "" : (ViewData.ModelState["Email"]?.Errors.Count > 0 ? "is-invalid" : ""))"
+                                   placeholder="Ingrese el email del ciudadano"
+                                   maxlength="100" />
+                            <span asp-validation-for="Email" class="invalid-feedback"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label asp-for="Identificacion" class="form-label fw-bold">
+                                Identificacion <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Identificacion"
+                                   class="form-control @(ViewData.ModelState.IsValid ? "" : (ViewData.ModelState["Identificacion"]?.Errors.Count > 0 ? "is-invalid" : ""))"
+                                   placeholder="Ingrese la identificacion del ciudadano"
+                                   maxlength="100" />
+                            <span asp-validation-for="Identificacion" class="invalid-feedback"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="CiudadanoView" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Volver Atrás
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas @(isEdit ? "fa-save" : "fa-plus")"></i>
+                                @(isEdit ? "Guardar Cambios" : "Crear ciudadano")
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            @if (isEdit)
+            {
+                <div class="mt-3">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Estado actual: @Model.Estado</strong>
+                                @if (Model?.Estado == Sadvo.Core.Domain.Enums.Actividad.Activo)
+                                {
+                                    <span class="badge bg-success ms-1">Activo</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary ms-1">Inactivo</span>
+                                }
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

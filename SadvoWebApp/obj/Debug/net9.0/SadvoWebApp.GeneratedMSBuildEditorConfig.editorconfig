@@ -1,0 +1,201 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = SadvoWebApp
+build_property.RootNamespace = SadvoWebApp
+build_property.ProjectDir = D:\Leonardo\SadvoApp2.0\SadvoWebApp\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = D:\Leonardo\SadvoApp2.0\SadvoWebApp
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/AlianzaPolitica/AlianzaPoliticaView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxpYW56YVBvbGl0aWNhXEFsaWFuemFQb2xpdGljYVZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/AlianzaPolitica/CrearSolicitud.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxpYW56YVBvbGl0aWNhXENyZWFyU29saWNpdHVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/AsignacionCandidato/AddAsignacionCandidato.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpZ25hY2lvbkNhbmRpZGF0b1xBZGRBc2lnbmFjaW9uQ2FuZGlkYXRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/AsignacionCandidato/AsignacionCandidatoView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpZ25hY2lvbkNhbmRpZGF0b1xBc2lnbmFjaW9uQ2FuZGlkYXRvVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/AsignacionCandidato/DeleteAsignacionCandidato.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpZ25hY2lvbkNhbmRpZGF0b1xEZWxldGVBc2lnbmFjaW9uQ2FuZGlkYXRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/AsignacionDirigente/AddAsignacionDirigente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpZ25hY2lvbkRpcmlnZW50ZVxBZGRBc2lnbmFjaW9uRGlyaWdlbnRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/AsignacionDirigente/AsignacionDirigentesView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpZ25hY2lvbkRpcmlnZW50ZVxBc2lnbmFjaW9uRGlyaWdlbnRlc1ZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/AsignacionDirigente/DeleteAsignacionDirigente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpZ25hY2lvbkRpcmlnZW50ZVxEZWxldGVBc2lnbmFjaW9uRGlyaWdlbnRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Candidato/AddCandidato.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FuZGlkYXRvXEFkZENhbmRpZGF0by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Candidato/CandidatoView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FuZGlkYXRvXENhbmRpZGF0b1ZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Candidato/ConfirmarCambioEstado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FuZGlkYXRvXENvbmZpcm1hckNhbWJpb0VzdGFkby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Candidato/EditCandidato.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FuZGlkYXRvXEVkaXRDYW5kaWRhdG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Ciudadano/AddCiudadano.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2l1ZGFkYW5vXEFkZENpdWRhZGFuby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Ciudadano/CiudadanoView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2l1ZGFkYW5vXENpdWRhZGFub1ZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Ciudadano/ConfirmarCambioEstado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2l1ZGFkYW5vXENvbmZpcm1hckNhbWJpb0VzdGFkby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Dirigente/Menu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlyaWdlbnRlXE1lbnUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Eleccion/AddEleccion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWxlY2Npb25cQWRkRWxlY2Npb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Eleccion/ConfirmarFinalizarEleccion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWxlY2Npb25cQ29uZmlybWFyRmluYWxpemFyRWxlY2Npb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Eleccion/EleccionView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWxlY2Npb25cRWxlY2Npb25WaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Eleccion/Resultados.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWxlY2Npb25cUmVzdWx0YWRvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Elector/SelectPuesto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWxlY3RvclxTZWxlY3RQdWVzdG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Elector/ValidateOCR.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWxlY3RvclxWYWxpZGF0ZU9DUi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Elector/VoteForPuesto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWxlY3RvclxWb3RlRm9yUHVlc3RvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Elector/VotingComplete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWxlY3RvclxWb3RpbmdDb21wbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Login/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Menu/Menu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudVxNZW51LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/PartidoPolitico/AddPartidoPolitico.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGlkb1BvbGl0aWNvXEFkZFBhcnRpZG9Qb2xpdGljby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/PartidoPolitico/ConfirmarCambioEstado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGlkb1BvbGl0aWNvXENvbmZpcm1hckNhbWJpb0VzdGFkby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/PartidoPolitico/PartidoPoliticoView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydGlkb1BvbGl0aWNvXFBhcnRpZG9Qb2xpdGljb1ZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/PuestoElectivo/AddPuestoElectivo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVlc3RvRWxlY3Rpdm9cQWRkUHVlc3RvRWxlY3Rpdm8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/PuestoElectivo/ConfirmarCambioEstado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVlc3RvRWxlY3Rpdm9cQ29uZmlybWFyQ2FtYmlvRXN0YWRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/PuestoElectivo/PuestoElectivoView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVlc3RvRWxlY3Rpdm9cUHVlc3RvRWxlY3Rpdm9WaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Usuario/AddUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xBZGRVc3VhcmlvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Usuario/ConfirmarCambioEstado.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xDb25maXJtYXJDYW1iaW9Fc3RhZG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Usuario/UsuarioView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xVc3VhcmlvVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-u8rj5jz39z
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Shared/_LayoutAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-vpkoy10e5g
+
+[D:/Leonardo/SadvoApp2.0/SadvoWebApp/Views/Shared/_LayoutDirigente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXREaXJpZ2VudGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-wdcvndmohm

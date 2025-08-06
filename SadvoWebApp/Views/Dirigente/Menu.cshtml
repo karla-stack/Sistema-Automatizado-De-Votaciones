@@ -1,0 +1,360 @@
+﻿@model Sadvo.Core.Application.ViewModels.Dirigente.DirigenteMenuViewModel
+
+@{
+    ViewData["Title"] = "Panel del Dirigente";
+    Layout = "_LayoutDirigente";
+}
+
+<div class="container-fluid">
+    <!-- Header de Bienvenida -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="mb-1">
+                                <i class="fas fa-user-tie mr-2"></i>
+                                Bienvenido, @Model.UsuarioNombre
+                            </h2>
+                            <p class="mb-0">Panel de Control del Dirigente Político</p>
+                            @if (Model.TieneEleccionActiva)
+                            {
+                                <span class="badge badge-warning mt-2">
+                                    <i class="fas fa-vote-yea"></i>
+                                    Elección Activa: @Model.EleccionActivaNombre
+                                </span>
+                            }
+                        </div>
+                        <div>
+                            <i class="fas fa-chart-line fa-3x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje de Error (si existe) -->
+    @if (Model.TieneError)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            @Model.MensajeError
+            <button type="button" class="close" data-dismiss="alert">
+                <span>&times;</span>
+            </button>
+        </div>
+    }
+
+    <!-- Información del Partido Político -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-info">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-flag mr-2"></i>
+                        Mi Partido Político
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <!-- Logo del Partido -->
+                        <div class="col-md-2 text-center">
+                            @if (Model.PartidoInfo.TieneLogo)
+                            {
+                                <img src="@Model.PartidoInfo.LogoUrlSegura"
+                                     alt="Logo @Model.PartidoInfo.Siglas"
+                                     class="party-logo img-fluid">
+                            }
+                            else
+                            {
+                                <div class="party-logo-placeholder">
+                                    <i class="fas fa-image fa-3x text-muted"></i>
+                                    <p class="small text-muted mt-2">Sin logo</p>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Información del Partido -->
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3 class="text-primary mb-2">
+                                        @Model.PartidoInfo.Nombre
+                                        <span class="badge badge-primary ml-2">@Model.PartidoInfo.Siglas</span>
+                                    </h3>
+                                    @if (!string.IsNullOrEmpty(Model.PartidoInfo.Descripcion))
+                                    {
+                                        <p class="text-muted mb-3">@Model.PartidoInfo.Descripcion</p>
+                                    }
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="partido-info">
+                                        <p class="mb-0">
+                                            <i class="@Model.PartidoInfo.EstadoIcono @Model.PartidoInfo.EstadoClase mr-2"></i>
+                                            <strong>Estado:</strong>
+                                            <span class="@Model.PartidoInfo.EstadoClase">@Model.PartidoInfo.EstadoTexto</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Indicadores en Cards -->
+    <div class="row mb-4">
+        <!-- Candidatos Activos -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card indicator-card border-success h-100">
+                <div class="card-body text-center">
+                    <i class="@Model.Indicadores.IconoCandidatosActivos fa-3x text-success mb-3"></i>
+                    <h3 class="text-success">@Model.Indicadores.CandidatosActivos</h3>
+                    <h6 class="card-title">Candidatos Activos</h6>
+                    <p class="card-text small text-muted">@Model.Indicadores.MensajeCandidatos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Candidatos Inactivos -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card indicator-card border-warning h-100">
+                <div class="card-body text-center">
+                    <i class="@Model.Indicadores.IconoCandidatosInactivos fa-3x text-warning mb-3"></i>
+                    <h3 class="text-warning">@Model.Indicadores.CandidatosInactivos</h3>
+                    <h6 class="card-title">Candidatos Inactivos</h6>
+                    <p class="card-text small text-muted">
+                        @(Model.Indicadores.TotalCandidatos > 0 ?
+                                                $"{Math.Round((Model.Indicadores.CandidatosInactivos * 100.0) / Model.Indicadores.TotalCandidatos, 1)}% del total" :
+                                                "Sin candidatos registrados")
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alianzas Políticas -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card indicator-card border-info h-100">
+                <div class="card-body text-center">
+                    <i class="@Model.Indicadores.IconoAlianzas fa-3x text-info mb-3"></i>
+                    <h3 class="text-info">@Model.Indicadores.AlianzasPoliticas</h3>
+                    <h6 class="card-title">Alianzas Políticas</h6>
+                    <p class="card-text small text-muted">@Model.Indicadores.MensajeAlianzas</p>
+                    @if (Model.Indicadores.SolicitudesAlianzasPendientes > 0)
+                    {
+                        <span class="badge badge-danger">
+                            @Model.Indicadores.SolicitudesAlianzasPendientes pendientes
+                        </span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Candidatos Asignados -->
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card indicator-card border-primary h-100">
+                <div class="card-body text-center">
+                    <i class="@Model.Indicadores.IconoAsignaciones fa-3x text-primary mb-3"></i>
+                    <h3 class="text-primary">
+                        @Model.Indicadores.CandidatosAsignadosPuesto/@Model.Indicadores.PuestosElectivosTotales
+                    </h3>
+                    <h6 class="card-title">Candidatos Asignados</h6>
+                    <p class="card-text small text-muted">@Model.Indicadores.MensajeAsignaciones</p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar @Model.Indicadores.ClaseProgressBar"
+                             role="progressbar"
+                             style="width: @Model.Indicadores.PorcentajeCandidatosAsignados%">
+                            @Model.Indicadores.PorcentajeCandidatosFormateado
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menú de Navegación -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-tasks mr-2"></i>
+                        Opciones del Menú
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Candidatos -->
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <a href="@Url.Action("CandidatoView", "Candidato")" class="text-decoration-none">
+                                <div class="card menu-card border-primary h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                                        <h5 class="card-title">Candidatos</h5>
+                                        <p class="card-text text-muted">
+                                            Gestionar candidatos del partido político
+                                        </p>
+                                        <span class="badge badge-primary">
+                                            @Model.Indicadores.TotalCandidatos candidatos
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Asignar Candidatos -->
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <a href="@Url.Action("AsignacionCandidatoView", "AsignacionCandidato")" class="text-decoration-none">
+                                <div class="card menu-card border-success h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-user-plus fa-3x text-success mb-3"></i>
+                                        <h5 class="card-title">Asignar Candidatos</h5>
+                                        <p class="card-text text-muted">
+                                            Asignar candidatos a puestos electivos
+                                        </p>
+                                        <span class="badge @Model.Indicadores.ClaseAsignaciones">
+                                            @Model.Indicadores.PorcentajeCandidatosFormateado completado
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Alianzas Políticas -->
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <a href="@Url.Action("AlianzaPoliticaView", "AlianzaPolitica")" class="text-decoration-none">
+                                <div class="card menu-card border-info h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-handshake fa-3x text-info mb-3"></i>
+                                        <h5 class="card-title">Alianzas Políticas</h5>
+                                        <p class="card-text text-muted">
+                                            Gestionar alianzas y coaliciones
+                                        </p>
+                                        <div>
+                                            <span class="badge badge-info">
+                                                @Model.Indicadores.AlianzasPoliticas alianzas
+                                            </span>
+                                            @if (Model.Indicadores.SolicitudesAlianzasPendientes > 0)
+                                            {
+                                                <span class="badge badge-danger ml-1">
+                                                    @Model.Indicadores.SolicitudesAlianzasPendientes pendientes
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón de Actualizar -->
+    <div class="row mt-3">
+        <div class="col-12 text-center">
+            <button type="button" class="btn btn-outline-secondary" onclick="actualizarIndicadores()">
+                <i class="fas fa-sync-alt"></i>
+                Actualizar Indicadores
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .opacity-50 {
+        opacity: 0.5;
+    }
+
+    .party-logo {
+        max-height: 80px;
+        max-width: 100px;
+        border-radius: 8px;
+        border: 2px solid #dee2e6;
+        padding: 8px;
+        background: white;
+    }
+
+    .party-logo-placeholder {
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        background: #f8f9fa;
+    }
+
+    .partido-info p {
+        font-size: 0.9rem;
+    }
+
+    .indicator-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        .indicator-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+    .menu-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+        .menu-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+    .progress {
+        height: 8px;
+    }
+
+    .card-header {
+        font-weight: 600;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        function actualizarIndicadores() {
+            const btn = event.target;
+            const originalHtml = btn.innerHTML;
+
+            // Mostrar loading
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Actualizando...';
+            btn.disabled = true;
+
+            fetch('@Url.Action("GetIndicadores", "Dirigente")')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Recargar la página para mostrar los datos actualizados
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('Error de conexión');
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                });
+        }
+
+        // Auto-actualizar cada 5 minutos
+        setInterval(actualizarIndicadores, 300000);
+    </script>
+}

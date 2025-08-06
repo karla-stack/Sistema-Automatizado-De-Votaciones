@@ -1,0 +1,179 @@
+﻿@model DeleteAsignacionViewModel
+@{
+    ViewData["Title"] = "Confirmar Eliminación";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0">
+                <!-- Header con gradiente -->
+                <div class="card-header text-white text-center py-4" style="background: linear-gradient(135deg, #dc3545, #c82333);">
+                    <div class="mb-3">
+                        <i class="fas fa-exclamation-triangle fa-3x"></i>
+                    </div>
+                    <h3 class="card-title mb-0 font-weight-bold">
+                        Confirmar Eliminación
+                    </h3>
+                    <p class="mb-0 mt-2 opacity-75">Esta acción no se puede deshacer</p>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Mensaje principal -->
+                    <div class="text-center mb-4">
+                        <h5 class="text-dark mb-4">
+                            ¿Está seguro que desea desvincular este dirigente político?
+                        </h5>
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div class="card bg-light border-0">
+                                    <div class="card-body py-3">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-6 mb-2 mb-md-0">
+                                                <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                                                    <div class="bg-primary rounded-circle p-2 me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                                        <i class="fas fa-user text-white"></i>
+                                                    </div>
+                                                    <div class="text-start">
+                                                        <small class="text-muted d-block">Dirigente</small>
+                                                        <strong class="text-dark">@Model.NombreUsuario</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center justify-content-center justify-content-md-end">
+                                                    <div class="bg-info rounded-circle p-2 me-3" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                                        <i class="fas fa-flag text-white"></i>
+                                                    </div>
+                                                    <div class="text-start">
+                                                        <small class="text-muted d-block">Partido</small>
+                                                        <span class="badge bg-info text-white px-3 py-2 rounded-pill">
+                                                            @Model.SiglasPartido
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Advertencia -->
+                        <div class="alert alert-warning border-0">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Advertencia:</strong> Al confirmar, se eliminará permanentemente la vinculación entre el dirigente y el partido político.
+                        </div>
+                    </div>
+
+                    <!-- Formulario con botones mejorados -->
+                    <form method="post" action="@Url.Action("DeleteAsignacionDirigente", "AsignacionDirigente")">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        <input type="hidden" name="UsuarioId" value="@Model.UsuarioId" />
+                        <input type="hidden" name="PartidoPoliticoId" value="@Model.PartidoPoliticoId" />
+                        <input type="hidden" name="NombreUsuario" value="@Model.NombreUsuario" />
+                        <input type="hidden" name="SiglasPartido" value="@Model.SiglasPartido" />
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <a href="@Url.Action("AsignacionDirigentesView", "AsignacionDirigente")"
+                                   class="btn btn-light btn-lg w-100 border">
+                                    <i class="fas fa-arrow-left me-2"></i>
+                                    Cancelar
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit"
+                                        class="btn btn-danger btn-lg w-100"
+                                        onclick="return confirm('¿Confirma que desea eliminar esta asignación?');">
+                                    <i class="fas fa-trash me-2"></i>
+                                    Confirmar Eliminación
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Footer con información adicional -->
+                <div class="card-footer bg-light text-center py-3">
+                    <small class="text-muted">
+                        <i class="fas fa-shield-alt me-1"></i>
+                        ID de Asignación: <strong>@Model.Id</strong>
+                    </small>
+                </div>
+
+                @* Mostrar mensaje de error de validación *@
+                @if (!string.IsNullOrEmpty(Model?.Mensaje))
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        @Model.Mensaje
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        border: none;
+    }
+
+    .opacity-75 {
+        opacity: 0.75;
+    }
+
+    .btn-lg {
+        padding: 12px 24px;
+        font-weight: 600;
+        border-radius: 10px;
+    }
+
+    .alert {
+        border-radius: 10px;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+
+    .rounded-circle {
+        border-radius: 50% !important;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem;
+    }
+
+    .me-3 {
+        margin-right: 1rem;
+    }
+
+    .g-3 > * {
+        padding: 0.75rem;
+    }
+
+    .card-body {
+        padding: 2rem 1.5rem;
+    }
+
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    }
+</style>

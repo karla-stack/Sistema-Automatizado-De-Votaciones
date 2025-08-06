@@ -1,0 +1,142 @@
+﻿@model ConfirmarEstadoViewModel
+@{
+    ViewData["Title"] = "Confirmar Cambio de Estado";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="confirmation-container">
+    <div class="confirmation-card">
+        <h3 class="confirmation-title">Confirmar Acción</h3>
+
+        <div class="confirmation-message">
+            <p>@Model.MensajeConfirmacion</p>
+            @if (!string.IsNullOrEmpty(Model.NombreUsuario))
+            {
+                <div class="user-name">
+                    <strong>Usuario:</strong> @Model.NombreUsuario
+                </div>
+            }
+        </div>
+
+        <div class="confirmation-actions">
+            <a href="@Url.Action("PuestoElectivoView", "PuestoElectivo")" class="btn btn-cancel">Cancelar</a>
+
+            <form asp-action="CambiarEstadoUsuario" asp-controller="PuestoElectivo" method="post" style="display: inline;">
+                <input type="hidden" name="id" value="@Model.UsuarioId" />
+                <button type="submit" class="btn @(Model.NuevoEstado == Sadvo.Core.Domain.Enums.Actividad.Activo ? "btn-activate" : "btn-deactivate")">
+                    @Model.AccionTexto
+                </button>
+
+                @if (!string.IsNullOrEmpty(Model.Mensaje))
+                {
+                    <div class="alert alert-danger mt-3">@Model.Mensaje</div>
+                }
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .confirmation-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .confirmation-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 100%;
+        max-width: 450px;
+        text-align: center;
+    }
+
+    .confirmation-title {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 25px;
+        font-weight: 600;
+    }
+
+    .confirmation-message {
+        margin-bottom: 30px;
+    }
+
+        .confirmation-message p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+    .user-name {
+        background-color: #f8f9fa;
+        padding: 12px;
+        border-radius: 6px;
+        color: #495057;
+        font-size: 16px;
+    }
+
+    .confirmation-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        min-width: 100px;
+    }
+
+    .btn-cancel {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .btn-cancel:hover {
+            background-color: #5a6268;
+            color: white;
+            text-decoration: none;
+        }
+
+    .btn-activate {
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-activate:hover {
+            background-color: #218838;
+        }
+
+    .btn-deactivate {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        .btn-deactivate:hover {
+            background-color: #c82333;
+        }
+
+    .confirmation-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+</style>

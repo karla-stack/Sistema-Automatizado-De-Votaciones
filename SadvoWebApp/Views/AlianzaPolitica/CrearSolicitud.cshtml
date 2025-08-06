@@ -1,0 +1,108 @@
+﻿@model CrearSolicitudViewModel
+@{
+    ViewData["Title"] = "Nueva Solicitud de Alianza";
+    Layout = "_LayoutDirigente";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-plus"></i>
+                        Nueva Solicitud de Alianza Política
+                    </h3>
+                </div>
+                <div class="card-body">
+
+                    <!-- Mostrar mensaje de error de validación -->
+                    @if (!string.IsNullOrEmpty(Model?.Mensaje))
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            @Model.Mensaje
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Por favor complete todos los campos obligatorios.
+                        </div>
+                    }
+
+                    @if (!Model.HasPartidosDisponibles)
+                    {
+                        <div class="alert alert-warning text-center">
+                            <i class="fas fa-info-circle fa-2x mb-3"></i>
+                            <h5>No hay partidos disponibles</h5>
+                            <p>No existen partidos políticos disponibles para realizar una solicitud de alianza.</p>
+                            <p><small>Esto puede deberse a que ya tiene solicitudes pendientes o alianzas activas con todos los partidos disponibles.</small></p>
+                            
+                            <div class="mt-3">
+                                <a href="@Url.Action("AlianzaPoliticaView", "AlianzaPolitica")" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Volver Atrás
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @using (Html.BeginForm("CrearSolicitud", "AlianzaPolitica", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            
+                            <!-- Partido Receptor -->
+                            <div class="form-group mb-3">
+                                <label for="PartidoReceptorId" class="form-label">
+                                    <i class="fas fa-flag"></i>
+                                    Partido Político <span class="text-danger">*</span>
+                                </label>
+                                <select asp-for="PartidoReceptorId" class="form-control">
+                                    <option value="">-- Seleccione un partido político --</option>
+                                    @if (Model?.PartidosDisponibles != null)
+                                    {
+                                        @foreach (var partido in Model.PartidosDisponibles)
+                                        {
+                                            <option value="@partido.Id">@partido.Nombre (@partido.Siglas)</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="PartidoReceptorId" class="text-danger"></span>
+                            </div>
+
+                            <!-- Información adicional -->
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Información:</strong> Solo se muestran partidos con los que no tiene solicitudes pendientes o alianzas activas.
+                            </div>
+
+                            <!-- Botones de acción -->
+                            <div class="form-group mt-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="@Url.Action("AlianzaPoliticaView", "AlianzaPolitica")" class="btn btn-secondary btn-block">
+                                            <i class="fas fa-arrow-left"></i>
+                                            Volver Atrás
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-success btn-block">
+                                            <i class="fas fa-paper-plane"></i>
+                                            Crear Solicitud
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

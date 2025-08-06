@@ -1,0 +1,11 @@
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\bin\Debug\net9.0\Sadvo.Core.Domain.deps.json
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\bin\Debug\net9.0\Sadvo.Core.Domain.dll
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\bin\Debug\net9.0\Sadvo.Core.Domain.pdb
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\obj\Debug\net9.0\Sadvo.Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\obj\Debug\net9.0\Sadvo.Core.Domain.AssemblyInfoInputs.cache
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\obj\Debug\net9.0\Sadvo.Core.Domain.AssemblyInfo.cs
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\obj\Debug\net9.0\Sadvo.Core.Domain.csproj.CoreCompileInputs.cache
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\obj\Debug\net9.0\Sadvo.Core.Domain.dll
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\obj\Debug\net9.0\refint\Sadvo.Core.Domain.dll
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\obj\Debug\net9.0\Sadvo.Core.Domain.pdb
+D:\Leonardo\SadvoApp2.0\SADVO.Core.Domain\obj\Debug\net9.0\ref\Sadvo.Core.Domain.dll

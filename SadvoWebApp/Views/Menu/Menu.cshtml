@@ -1,0 +1,362 @@
+﻿@model Sadvo.Core.Application.ViewModels.Administrador.AdministradorMenuViewModel
+
+@{
+    ViewData["Title"] = "Panel de Administración";
+        Layout = "_LayoutAdmin";
+}
+
+<div class="container-fluid">
+    <!-- Header de Bienvenida -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-dark text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="mb-1">
+                                <i class="fas fa-user-shield mr-2"></i>
+                                Bienvenido, @Model.UsuarioNombre
+                            </h2>
+                            <p class="mb-0">Panel de Administración del Sistema Electoral</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-cogs fa-3x opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje de Error (si existe) -->
+    @if (Model.TieneError)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            @Model.MensajeError
+            <button type="button" class="close" data-dismiss="alert">
+                <span>&times;</span>
+            </button>
+        </div>
+    }
+
+    <!-- Menú de Opciones del Administrador -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-tasks mr-2"></i>
+                        Opciones de Administración
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Puesto Electivo -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="@Url.Action("PuestoElectivoView", "PuestoElectivo")" class="text-decoration-none">
+                                <div class="card menu-option border-primary h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-medal fa-2x text-primary mb-2"></i>
+                                        <h6 class="card-title">Puesto Electivo</h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Ciudadanos -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="@Url.Action("CiudadanoView", "Ciudadano")" class="text-decoration-none">
+                                <div class="card menu-option border-success h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-users fa-2x text-success mb-2"></i>
+                                        <h6 class="card-title">Ciudadanos</h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Partidos Políticos -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="@Url.Action("PartidoPoliticoView", "PartidoPolitico")" class="text-decoration-none">
+                                <div class="card menu-option border-info h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-flag fa-2x text-info mb-2"></i>
+                                        <h6 class="card-title">Partidos Políticos</h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Usuarios -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="@Url.Action("UsuarioView", "Usuario")" class="text-decoration-none">
+                                <div class="card menu-option border-warning h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-user-cog fa-2x text-warning mb-2"></i>
+                                        <h6 class="card-title">Usuarios</h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Asignación de Dirigentes -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="@Url.Action("AsignacionDirigentesView", "AsignacionDirigente")" class="text-decoration-none">
+                                <div class="card menu-option border-secondary h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-user-tie fa-2x text-secondary mb-2"></i>
+                                        <h6 class="card-title">Asignación Dirigentes</h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Elecciones -->
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                            <a href="@Url.Action("EleccionView", "Eleccion")" class="text-decoration-none">
+                                <div class="card menu-option border-danger h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-vote-yea fa-2x text-danger mb-2"></i>
+                                        <h6 class="card-title">Elecciones</h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Resumen Electoral -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-chart-bar mr-2"></i>
+                        Resumen Electoral
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.TieneAñosDisponibles)
+                    {
+                        <form method="post" asp-action="ObtenerResumenElectoral">
+                            <div class="row align-items-end">
+                                <div class="col-md-6">
+                                    <label for="añoSeleccionado" class="form-label">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        Seleccionar Año:
+                                    </label>
+                                    <select name="añoSeleccionado" id="añoSeleccionado" class="form-control">
+                                        @foreach (var año in Model.AñosDisponibles)
+                                        {
+                                            if (año == Model.AñoSeleccionado)
+                                            {
+                                                <option value="@año" selected>@año</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@año">@año</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-search"></i>
+                                        Obtener Resumen Electoral
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle"></i>
+                                @Model.MensajeResumen
+                            </small>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info" role="alert">
+                            <i class="fas fa-info-circle"></i>
+                            No hay elecciones registradas en el sistema.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumen Electoral (si se ha solicitado) -->
+    @if (Model.MostrarResumen)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-poll-h mr-2"></i>
+                            Resumen Electoral - Año @Model.AñoSeleccionadoTexto
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.TieneElecciones)
+                        {
+                            <!-- Estadísticas Generales -->
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="card bg-primary text-white text-center">
+                                        <div class="card-body">
+                                            <h3>@Model.TotalElecciones</h3>
+                                            <p class="mb-0">Elecciones</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-success text-white text-center">
+                                        <div class="card-body">
+                                            <h3>@Model.TotalVotosGeneral.ToString("N0")</h3>
+                                            <p class="mb-0">Votos Totales</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-info text-white text-center">
+                                        <div class="card-body">
+                                            <h3>@Model.ResumenElectoral.Sum(r => r.CantidadPartidos)</h3>
+                                            <p class="mb-0">Partidos Participantes</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-warning text-white text-center">
+                                        <div class="card-body">
+                                            <h3>@Model.ResumenElectoral.Sum(r => r.CantidadCandidatos)</h3>
+                                            <p class="mb-0">Candidatos Totales</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tabla de Elecciones -->
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th><i class="fas fa-signature"></i> Nombre de la Elección</th>
+                                            <th><i class="fas fa-calendar"></i> Fecha</th>
+                                            <th class="text-center"><i class="fas fa-flag"></i> Partidos</th>
+                                            <th class="text-center"><i class="fas fa-users"></i> Candidatos</th>
+                                            <th class="text-center"><i class="fas fa-vote-yea"></i> Total Votos</th>
+                                            <th class="text-center"><i class="fas fa-info"></i> Estado</th>
+                                            <th class="text-center"><i class="fas fa-chart-pie"></i> Promedio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var eleccion in Model.ResumenElectoral)
+                                        {
+                                            <tr class="@(eleccion.EsEleccionReciente ? "table-warning" : "")">
+                                                <td>
+                                                    <strong>@eleccion.NombreEleccion</strong>
+                                                    @if (eleccion.EsEleccionReciente)
+                                                    {
+                                                        <span class="badge badge-warning ml-1">Reciente</span>
+                                                    }
+                                                </td>
+                                                <td>@eleccion.FechaFormateada</td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-info badge-lg">
+                                                        @eleccion.CantidadPartidosFormateada
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-primary badge-lg">
+                                                        @eleccion.CantidadCandidatosFormateada
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="badge badge-success badge-lg">
+                                                        @eleccion.TotalVotosFormateado
+                                                    </span>
+                                                    @if (eleccion.TieneAltaParticipacion)
+                                                    {
+                                                        <br><small class="text-success">Alta participación</small>
+                                                    }
+                                                </td>
+                                                <td class="text-center">
+                                                    <span class="badge @eleccion.EstadoClase">
+                                                        <i class="@eleccion.EstadoIcono"></i>
+                                                        @eleccion.EstadoEleccion
+                                                    </span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <small class="text-muted">
+                                                        @eleccion.CandidatosPorPartidoTexto
+                                                    </small>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning text-center" role="alert">
+                                <i class="fas fa-search fa-3x mb-3"></i>
+                                <h4>No se encontraron elecciones</h4>
+                                <p>No hay elecciones registradas para el año @Model.AñoSeleccionadoTexto</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .opacity-50 { opacity: 0.5; }
+    
+    .menu-option {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        min-height: 100px;
+    }
+    
+    .menu-option:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    
+    .menu-option .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    
+    .badge-lg {
+        font-size: 0.9em;
+        padding: 0.5em 0.75em;
+    }
+    
+    .card-header {
+        font-weight: 600;
+    }
+    
+    .table th {
+        border-top: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    
+    .table-warning {
+        background-color: rgba(255, 193, 7, 0.1);
+    }
+</style>

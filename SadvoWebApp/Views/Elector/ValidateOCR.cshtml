@@ -1,0 +1,95 @@
+﻿<!-- =================================================================== -->
+<!-- Views/Elector/ValidateOcr.cshtml - VALIDACIÓN DE IDENTIDAD CON OCR -->
+<!-- =================================================================== -->
+@{
+    ViewData["Title"] = "Validación de Identidad";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark text-center">
+                    <h4><i class="fas fa-camera me-2"></i>Validación de Identidad</h4>
+                </div>
+                <div class="card-body">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            @Html.ValidationSummary(false)
+                        </div>
+                    }
+
+                    <div class="alert alert-info">
+                        <h6><i class="fas fa-info-circle me-2"></i>Instrucciones:</h6>
+                        <ul class="mb-0">
+                            <li>Tome una foto clara de la parte frontal de su cédula</li>
+                            <li>Asegúrese de que la imagen esté bien iluminada</li>
+                            <li>Evite reflejos o sombras sobre el documento</li>
+                            <li>El número de cédula debe ser claramente visible</li>
+                            <li>Formatos aceptados: JPG, PNG, GIF</li>
+                        </ul>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data" asp-action="ValidateOcr">
+                        <div class="mb-4">
+                            <label for="idCardFile" class="form-label">
+                                <i class="fas fa-upload me-2"></i>
+                                Seleccione la imagen de su cédula *
+                            </label>
+                            <input type="file"
+                                   class="form-control"
+                                   id="idCardFile"
+                                   name="idCardFile"
+                                   accept="image/*"
+                                   required
+                                   onchange="previewImage(this)">
+                        </div>
+
+                        <!-- Vista previa de la imagen -->
+                        <div id="imagePreview" class="mb-4 d-none">
+                            <label class="form-label">Vista previa:</label>
+                            <div class="text-center">
+                                <img id="previewImg" src="#" alt="Vista previa" class="img-fluid" style="max-height: 300px; border: 2px dashed #ccc; padding: 10px;">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-warning btn-lg" id="submitBtn" disabled>
+                                <i class="fas fa-check me-2"></i>
+                                Validar Identidad
+                            </button>
+                            <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Regresar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(input) {
+        const file = input.files[0];
+        const submitBtn = document.getElementById('submitBtn');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                imagePreview.classList.remove('d-none');
+                submitBtn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.classList.add('d-none');
+            submitBtn.disabled = true;
+        }
+    }
+</script>
